@@ -1,0 +1,6 @@
+name: LightControl
+main: org.morden.lightcontrol.LightControl
+version: 0.1
+author: mordenkainen
+description: RedstonChips library for controlling various light sources.
+depend: [RedstoneChips]
