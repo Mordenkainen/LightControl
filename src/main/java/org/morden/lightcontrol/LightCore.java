@@ -2,7 +2,7 @@ package org.morden.lightcontrol;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.block.BlockFace;
-import org.tal.redstonechips.channel.ReceivingCircuit;
+import org.tal.redstonechips.channels.ReceivingCircuit;
 import org.tal.redstonechips.util.BitSet7;
 import org.tal.redstonechips.util.BitSetUtils;
 
@@ -81,7 +81,8 @@ public abstract class LightCore extends ReceivingCircuit {
 				if (!mode) {
 					addressSize = (int)Math.ceil(Math.log(interfaceBlocks.length)/Math.log(2));
 				}
-				this.initWireless(sender, channelName);
+				this.parseChannelString(channelName);
+				//this.initWireless(sender, channelName);
 			} catch (IllegalArgumentException ie) {
 				error(sender, ie.getMessage());
 				return false;
@@ -111,8 +112,17 @@ public abstract class LightCore extends ReceivingCircuit {
         if (getChannel()!=null) redstoneChips.removeReceiver(this);
     }
 
-    @Override
+    /*@Override
     public int getChannelLength() {
+		if (mode) {
+			return interfaceBlocks.length;
+		} else {
+			return interfaceBlocks.length + 1;
+		}
+    }*/
+	
+	@Override
+    public int getLength() {
 		if (mode) {
 			return interfaceBlocks.length;
 		} else {
