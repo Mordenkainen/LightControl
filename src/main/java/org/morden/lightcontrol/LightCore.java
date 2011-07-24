@@ -1,6 +1,7 @@
 package org.morden.lightcontrol;
 
 import org.bukkit.command.CommandSender;
+import org.bukkit.block.BlockFace;
 import org.tal.redstonechips.channel.ReceivingCircuit;
 import org.tal.redstonechips.util.BitSet7;
 import org.tal.redstonechips.util.BitSetUtils;
@@ -9,12 +10,13 @@ import org.tal.redstonechips.util.BitSetUtils;
  *
  * @author Dennis Flanagan
  */
-public abstract class LightControl extends ReceivingCircuit {
+public abstract class LightCore extends ReceivingCircuit {
 	private boolean mode = false;
 	private int addressSize;
 	private boolean currentState = false;
 	private int currentAddress;
 	protected BitSet7 output;
+	protected static BlockFace[] faces = new BlockFace[] { BlockFace.UP, BlockFace.DOWN, BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST };
  
     @Override
     public void inputChange(int inIdx, boolean newLevel) {

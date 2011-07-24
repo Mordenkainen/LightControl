@@ -11,7 +11,7 @@ import org.tal.redstonechips.util.Locations;
  *
  * @author Dennis Flanagan
  */
-public class glasslight extends LightCore {
+public class rstorchlight extends RSLight {
 	
     @Override
 	protected void updateOutputs() {
@@ -23,10 +23,16 @@ public class glasslight extends LightCore {
         for (BlockFace face : faces) {
             Location f = Locations.getFace(origin, face);
 			Block block = world.getBlockAt(f);
-            if (block.getType().equals(Material.GLOWSTONE) && !value) {
-				block.setType(Material.GLASS);
-            } else if (block.getType().equals(Material.GLASS) && value) {
-				block.setType(Material.GLOWSTONE);
+            if (block.getType().equals(Material.REDSTONE_TORCH_ON) && !value) {
+				if (!rsTorches.contains(block)) {
+					rsTorches.add(block);
+				}
+				block.setType(Material.REDSTONE_TORCH_OFF);
+            } else if (block.getType().equals(Material.REDSTONE_TORCH_OFF) && value) {
+				if (rsTorches.contains(block)) {
+					rsTorches.remove(rsTorches.indexOf(block));
+				}
+				block.setType(Material.REDSTONE_TORCH_ON);
             } 
         }
     }
