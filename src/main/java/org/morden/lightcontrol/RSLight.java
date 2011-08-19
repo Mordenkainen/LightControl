@@ -3,7 +3,6 @@ package org.morden.lightcontrol;
 import java.util.ArrayList;
 import java.util.List;
 import org.bukkit.command.CommandSender;
-import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -32,7 +31,7 @@ public abstract class RSLight extends LightCore {
 	public void onBlockPhysics(BlockPhysicsEvent event) {
 		if (rsTorches.contains(event.getBlock())) {
 			event.setCancelled(true);
-			((Block)event.getBlock()).setType(Material.REDSTONE_TORCH_OFF);
+			((Block)event.getBlock()).setType(offMaterial);
 		}
 	}
 	
@@ -41,4 +40,23 @@ public abstract class RSLight extends LightCore {
 			rsTorches.remove(rsTorches.indexOf(event.getBlock()));
 		}
 	}
+	
+	@Override
+    protected void updateBlock(Block block, boolean value) {
+		if (block.getType().equals(onMaterial) && !value) {
+			if (!rsTorches.contains(block)) {
+				rsTorches.add(block);
+			}
+			block.setType(offMaterial);
+		} else if (block.getType().equals(offMaterial) && value) {
+			if (rsTorches.contains(block)) {
+				rsTorches.remove(rsTorches.indexOf(block));
+			}
+			block.setType(onMaterial);
+		} else if (block.getType().equals(offMaterial) && !value) {
+			if (!rsTorches.contains(block)) {
+				rsTorches.add(block);
+			}
+		}
+    }
 }

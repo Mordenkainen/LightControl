@@ -43,6 +43,7 @@ public class LightControl extends CircuitLibrary {
         };
 	
 		getServer().getPluginManager().registerEvent(Type.BLOCK_PHYSICS, blockListener, Priority.Highest, this);
+		getServer().getPluginManager().registerEvent(Type.BLOCK_BREAK, blockListener, Priority.Highest, this);
 	}
 	
 	static void registerRSTorchLightCircuit(RSLight circuit) {
