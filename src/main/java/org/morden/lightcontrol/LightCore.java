@@ -7,8 +7,7 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.Location;
-//import org.tal.redstonechips.channel.ReceivingCircuit;
-import org.tal.redstonechips.channels.ReceivingCircuit;
+import org.tal.redstonechips.channel.ReceivingCircuit;
 import org.tal.redstonechips.util.BitSet7;
 import org.tal.redstonechips.util.BitSetUtils;
 import org.tal.redstonechips.util.Locations;
@@ -123,8 +122,8 @@ public abstract class LightCore extends ReceivingCircuit {
 				if (mode == 0) {
 					addressSize = (int)Math.ceil(Math.log(interfaceBlocks.length)/Math.log(2));
 				}
-				this.parseChannelString(channelName);
-				//this.initWireless(sender, channelName);
+
+				this.initWireless(sender, channelName);
 			} catch (IllegalArgumentException ie) {
 				error(sender, ie.getMessage());
 				return false;
@@ -142,7 +141,7 @@ public abstract class LightCore extends ReceivingCircuit {
 
     @Override
     public void receive(BitSet7 bits) {
-        if (hasDebuggers()) debug("Received " + BitSetUtils.bitSetToBinaryString(bits, 0, getLength()));
+        if (hasDebuggers()) debug("Received " + BitSetUtils.bitSetToBinaryString(bits, 0, getChannelLength()));
 		//if (hasDebuggers()) debug("Received " + BitSetUtils.bitSetToBinaryString(bits, 0, getChannelLength()));
 		if (mode == 0) {
 			output.set(BitSetUtils.bitSetToUnsignedInt(bits.get(1, addressSize + 1), 0, addressSize), bits.get(0));
@@ -167,7 +166,7 @@ public abstract class LightCore extends ReceivingCircuit {
     }*/
 	
 	@Override
-    public int getLength() {
+    public int getChannelLength() {
 		if (mode == 0) {
 			return addressSize + 2;
 		} else if (mode == 1) {
