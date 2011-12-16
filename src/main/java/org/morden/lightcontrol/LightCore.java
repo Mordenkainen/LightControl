@@ -175,13 +175,8 @@ public abstract class LightCore extends ReceivingCircuit {
 		return 1;
     }
 	
-	@Override
-    public void circuitDestroyed() {
-        if (getChannel()!=null) redstoneChips.removeReceiver(this);
-	}
-	
-	@Override
-	protected boolean isStateless() {
+    @Override
+    protected boolean isStateless() {
         return false;
     }
 	
@@ -204,7 +199,7 @@ public abstract class LightCore extends ReceivingCircuit {
 	{
 		for (int i = 0; i < interfaceBlocks.length; i++) {
 			for (BlockFace face : faces) {
-				Location f = Locations.getFace(interfaceBlocks[i], face);
+				Location f = Locations.getFace(interfaceBlocks[i].getLocation(), face);
 				Block block = world.getBlockAt(f);
 				updateBlock(block, output.get(i));
 			}
