@@ -7,7 +7,8 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.Location;
-import org.tal.redstonechips.channel.ReceivingCircuit;
+import org.tal.redstonechips.circuit.Circuit;
+import org.tal.redstonechips.wireless.Receiver;
 import org.tal.redstonechips.util.BitSet7;
 import org.tal.redstonechips.util.BitSetUtils;
 import org.tal.redstonechips.util.Locations;
@@ -16,7 +17,7 @@ import org.tal.redstonechips.util.Locations;
  *
  * @author Dennis Flanagan
  */
-public abstract class LightCore extends ReceivingCircuit {
+public abstract class LightCore extends Circuit {
 	private int mode = 0;
 	private int addressSize;
 	private boolean currentState = false;
@@ -26,6 +27,8 @@ public abstract class LightCore extends ReceivingCircuit {
 	protected Material onMaterial = null;
 	protected Material offMaterial = null;
  
+        protected Receiver receiver;
+        
     @Override
     public void inputChange(int inIdx, boolean newLevel) {
 		if (mode == 0) {
@@ -119,11 +122,15 @@ public abstract class LightCore extends ReceivingCircuit {
 			}
 		} else {
 			try {
+                                int len;
 				if (mode == 0) {
 					addressSize = (int)Math.ceil(Math.log(interfaceBlocks.length)/Math.log(2));
-				}
-
-				this.initWireless(sender, channelName);
+                                        len = addressSize + 2;
+				} else if (mode == 1) {
+                                        len = interfaceBlocks.length;
+                                } else len = 1;
+                                receiver = new LightCoreReceiver();
+				receiver.init(sender, channelName, len, this);
 			} catch (IllegalArgumentException ie) {
 				error(sender, ie.getMessage());
 				return false;
@@ -139,20 +146,22 @@ public abstract class LightCore extends ReceivingCircuit {
 		return true;
     }
 
-    @Override
-    public void receive(BitSet7 bits) {
-        if (hasDebuggers()) debug("Received " + BitSetUtils.bitSetToBinaryString(bits, 0, getChannelLength()));
-		//if (hasDebuggers()) debug("Received " + BitSetUtils.bitSetToBinaryString(bits, 0, getChannelLength()));
-		if (mode == 0) {
-			output.set(BitSetUtils.bitSetToUnsignedInt(bits.get(1, addressSize + 1), 0, addressSize), bits.get(0));
-		} else if (mode == 1) {
-			for (int i=0; i<interfaceBlocks.length; i++) {
-                output.set(i, bits.get(i));
-            }
-		} else {
-			output.set(0, interfaceBlocks.length, bits.get(0));
-		}
-		updateOutputs();
+    class LightCoreReceiver extends Receiver {
+        @Override
+        public void receive(BitSet7 bits) {
+            if (hasDebuggers()) debug("Received " + BitSetUtils.bitSetToBinaryString(bits, 0, getChannelLength()));
+                    //if (hasDebuggers()) debug("Received " + BitSetUtils.bitSetToBinaryString(bits, 0, getChannelLength()));
+                    if (mode == 0) {
+                            output.set(BitSetUtils.bitSetToUnsignedInt(bits.get(1, addressSize + 1), 0, addressSize), bits.get(0));
+                    } else if (mode == 1) {
+                            for (int i=0; i<interfaceBlocks.length; i++) {
+                    output.set(i, bits.get(i));
+                }
+                    } else {
+                            output.set(0, interfaceBlocks.length, bits.get(0));
+                    }
+                    updateOutputs();
+        }        
     }
 
     /*@Override
@@ -164,16 +173,6 @@ public abstract class LightCore extends ReceivingCircuit {
 		}
 		return 1;
     }*/
-	
-	@Override
-    public int getChannelLength() {
-		if (mode == 0) {
-			return addressSize + 2;
-		} else if (mode == 1) {
-			return interfaceBlocks.length;
-		}
-		return 1;
-    }
 	
     @Override
     protected boolean isStateless() {
@@ -207,4 +206,9 @@ public abstract class LightCore extends ReceivingCircuit {
 	}
 	
 	protected abstract void updateBlock(Block block, boolean value);
+
+    @Override
+    public void circuitShutdown() {
+        if (receiver!=null) receiver.shutdown();
+    }        
 }

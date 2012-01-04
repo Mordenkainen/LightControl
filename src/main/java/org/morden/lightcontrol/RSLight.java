@@ -25,6 +25,7 @@ public abstract class RSLight extends LightCore {
 	
 	@Override
     public void circuitShutdown() {
+        super.circuitShutdown();
         LightControl.deregisterRSTorchLightCircuit(this);
     }
 	
