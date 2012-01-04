@@ -206,9 +206,4 @@ public abstract class LightCore extends Circuit {
 	}
 	
 	protected abstract void updateBlock(Block block, boolean value);
-
-    @Override
-    public void circuitShutdown() {
-        if (receiver!=null) receiver.shutdown();
-    }        
 }
