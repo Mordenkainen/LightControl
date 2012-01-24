@@ -7,7 +7,6 @@ import org.bukkit.event.Event.Type;
 import org.bukkit.event.block.BlockListener;
 import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.tal.redstonechips.RedstoneChips;
 import org.tal.redstonechips.circuit.CircuitLibrary;
 
 /**
