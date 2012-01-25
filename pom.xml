@@ -4,7 +4,7 @@
   <groupId>org.morden</groupId>
   <artifactId>LightControl</artifactId>
   <packaging>jar</packaging>
-  <version>0.2</version>
+  <version>0.3</version>
   <name>LightControl</name>
   <url>http://maven.apache.org</url>
     <build>

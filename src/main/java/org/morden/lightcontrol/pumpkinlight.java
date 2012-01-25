@@ -11,26 +11,26 @@ import org.bukkit.block.BlockState;
  * @author Dennis Flanagan
  */
 public class pumpkinlight extends LightCore {
-	@Override
-    protected boolean init(CommandSender sender, String[] args) {
-		onMaterial = Material.JACK_O_LANTERN;
-		offMaterial = Material.PUMPKIN;
-		return super.init(sender, args);
-	}
-	
     @Override
-	protected void updateBlock(Block block, boolean value) {
-		BlockState state = block.getState();
+    protected boolean init(CommandSender sender, String[] args) {
+        onMaterial = Material.JACK_O_LANTERN;
+        offMaterial = Material.PUMPKIN;
+        return super.init(sender, args);
+    }
+    
+    @Override
+    protected void updateBlock(Block block, boolean value) {
+        BlockState state = block.getState();
         if (block.getType().equals(onMaterial) && !value) {
-			Pumpkin data = (Pumpkin)(state.getData());
-			state.setType(offMaterial);
-			state.setData(data);
-			state.update(true);
-		} else if (block.getType().equals(offMaterial) && value) {
-			Pumpkin data = (Pumpkin)(state.getData());
-			state.setType(onMaterial);
-			state.setData(data);
-			state.update(true);
-		} 
+            Pumpkin data = (Pumpkin)(state.getData());
+            state.setType(offMaterial);
+            state.setData(data);
+            state.update(true);
+        } else if (block.getType().equals(offMaterial) && value) {
+            Pumpkin data = (Pumpkin)(state.getData());
+            state.setType(onMaterial);
+            state.setData(data);
+            state.update(true);
+        } 
     }
 }

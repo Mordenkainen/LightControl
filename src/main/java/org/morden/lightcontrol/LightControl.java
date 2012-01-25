@@ -8,44 +8,47 @@ import org.bukkit.event.block.BlockListener;
 import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.tal.redstonechips.circuit.CircuitLibrary;
+import org.tal.redstonechips.RedstoneChips;
+import org.tal.redstonechips.PrefsManager;
 
 /**
  *
  * @author Dennis Flanagan
  */
 public class LightControl extends CircuitLibrary {
-	private static List<RSLight> rsTorchLightCircuits = new ArrayList<RSLight>();
-
+    private static List<RSLight> rsTorchLightCircuits = new ArrayList<RSLight>();
+    public RedstoneChips redstonechips;
+    
     @Override
     public Class[] getCircuitClasses() {
         return new Class[] { glasslight.class, pumpkinlight.class, rstorchlight.class, torchlight.class, netherlight.class };
     }
-	
-	@Override
-	public void onEnable() {
+    
+    @Override
+    public void onEnable() {
         BlockListener blockListener = new BlockListener() {
             @Override
             public void onBlockPhysics(BlockPhysicsEvent event) {
-				if (!event.isCancelled()) {
-					for (RSLight circuit : rsTorchLightCircuits)
-						circuit.onBlockPhysics(event);
-				}
+                if (!event.isCancelled()) {
+                    for (RSLight circuit : rsTorchLightCircuits)
+                        circuit.onBlockPhysics(event);
+                }
             }
-			
-			@Override
+            
+            @Override
             public void onBlockBreak(BlockBreakEvent event) {
                 if (!event.isCancelled()) {
                     for (RSLight circuit : rsTorchLightCircuits)
-						circuit.onBlockBreak(event);
+                        circuit.onBlockBreak(event);
                 }
             }
         };
-	
-		getServer().getPluginManager().registerEvent(Type.BLOCK_PHYSICS, blockListener, Priority.Highest, this);
-		getServer().getPluginManager().registerEvent(Type.BLOCK_BREAK, blockListener, Priority.Highest, this);
-	}
-	
-	static void registerRSTorchLightCircuit(RSLight circuit) {
+    
+        getServer().getPluginManager().registerEvent(Type.BLOCK_PHYSICS, blockListener, Priority.Highest, this);
+        getServer().getPluginManager().registerEvent(Type.BLOCK_BREAK, blockListener, Priority.Highest, this);
+    }
+    
+    static void registerRSTorchLightCircuit(RSLight circuit) {
         if (!rsTorchLightCircuits.contains(circuit))
             rsTorchLightCircuits.add(circuit);
     }
