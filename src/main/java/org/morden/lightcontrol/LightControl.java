@@ -10,6 +10,9 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.tal.redstonechips.circuit.CircuitLibrary;
 import org.tal.redstonechips.RedstoneChips;
 import org.tal.redstonechips.PrefsManager;
+import org.bukkit.material.MaterialData;
+import org.bukkit.Material;
+
 
 /**
  *
@@ -17,7 +20,7 @@ import org.tal.redstonechips.PrefsManager;
  */
 public class LightControl extends CircuitLibrary {
     private static List<RSLight> rsTorchLightCircuits = new ArrayList<RSLight>();
-    public RedstoneChips redstonechips;
+    public static RedstoneChips redstonechips;
     
     @Override
     public Class[] getCircuitClasses() {
@@ -55,5 +58,12 @@ public class LightControl extends CircuitLibrary {
 
     static boolean deregisterRSTorchLightCircuit(RSLight circuit) {
         return rsTorchLightCircuits.remove(circuit);
+    }
+    
+    @Override
+    public void onRedstoneChipsEnable(RedstoneChips instance) {
+        instance.getPrefs().registerCircuitPreference(glasslight.class, "dropGlowstone", false);
+        instance.getPrefs().registerCircuitPreference(LightControl.class, "lampPostBlocks", "WOOD,LOG,IRON_FENCE,FENCE,NETHER_BRICK,NETHER_FENCE");
+        redstonechips = instance;
     }
 }

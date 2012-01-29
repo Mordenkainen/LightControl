@@ -12,8 +12,8 @@ import org.bukkit.block.Block;
 public class netherlight extends LightCore {
     @Override
     protected boolean init(CommandSender sender, String[] args) {
-        onMaterial = Material.FIRE;
-        offMaterial = Material.AIR;
+        onMaterial = Material.NETHERRACK;
+        offMaterial = Material.NETHERRACK;
         return super.init(sender, args);
     }
     
@@ -22,9 +22,9 @@ public class netherlight extends LightCore {
         if (block.getType().equals(Material.NETHERRACK)) {
             Block fireBlock = block.getFace(BlockFace.UP);
             if (value) {
-                fireBlock.setType(onMaterial);
+                fireBlock.setType(Material.FIRE);
             } else {
-                fireBlock.setType(offMaterial);
+                fireBlock.setType(Material.AIR);
             }
         }
     }

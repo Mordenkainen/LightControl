@@ -2,6 +2,7 @@ package org.morden.lightcontrol;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import org.bukkit.command.CommandSender;
 import org.bukkit.block.Block;
 import org.bukkit.event.block.BlockPhysicsEvent;
@@ -58,5 +59,11 @@ public abstract class RSLight extends LightCore {
                 rsTorches.add(block);
             }
         }
+    }
+    
+    @Override
+    public void setInternalState(Map<String, String> state) {
+        rsTorches = new ArrayList<Block>();
+        super.setInternalState(state);		
     }
 }
