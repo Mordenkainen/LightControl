@@ -9,6 +9,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.tal.redstonechips.circuit.CircuitLibrary;
 import org.tal.redstonechips.RedstoneChips;
 import org.bukkit.event.Listener;
+import org.tal.redstonechips.circuit.Circuit;
 
 
 /**
@@ -19,8 +20,9 @@ public class LightControl extends CircuitLibrary implements Listener {
     private static List<RSLight> rsTorchLightCircuits = new ArrayList<RSLight>();
     public static RedstoneChips redstonechips;
     
-    @Override
-    public Class[] getCircuitClasses() {
+    @SuppressWarnings("unchecked")
+	@Override
+    public Class<? extends Circuit>[] getCircuitClasses() {
         return new Class[] { glasslight.class, pumpkinlight.class, rstorchlight.class, torchlight.class, netherlight.class };
     }
     
