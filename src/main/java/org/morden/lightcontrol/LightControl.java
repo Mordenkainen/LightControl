@@ -27,7 +27,6 @@ public class LightControl extends CircuitLibrary implements Listener {
     @Override
     public void onEnable() {
         getServer().getPluginManager().registerEvents(this, this);
-        getServer().getPluginManager().registerEvents(this, this);
     }
     
     @EventHandler(priority = EventPriority.HIGHEST)
