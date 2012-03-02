@@ -20,7 +20,7 @@ public class netherlight extends LightCore {
     @Override
     protected void updateBlock(Block block, boolean value) {
         if (block.getType().equals(Material.NETHERRACK)) {
-            Block fireBlock = block.getFace(BlockFace.UP);
+            Block fireBlock = block.getRelative(BlockFace.UP);
             if (value) {
                 fireBlock.setType(Material.FIRE);
             } else {

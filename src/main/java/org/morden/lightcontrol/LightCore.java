@@ -236,7 +236,7 @@ public abstract class LightCore extends Circuit {
     class LightCoreReceiver extends Receiver {
         @Override
         public void receive(BitSet7 bits) {
-            if (hasDebuggers()) debug("Received " + BitSetUtils.bitSetToBinaryString(bits, 0, getChannelLength()));
+            if (hasListeners()) debug("Received " + BitSetUtils.bitSetToBinaryString(bits, 0, getChannelLength()));
             if (mode == 0) {
                 output.set(BitSetUtils.bitSetToUnsignedInt(bits.get(1, addressSize + 1), 0, addressSize), bits.get(0));
             } else if (mode == 1) {

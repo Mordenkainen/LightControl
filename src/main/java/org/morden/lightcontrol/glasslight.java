@@ -29,7 +29,7 @@ public class glasslight extends RSLight {
     public void onBlockBreak(BlockBreakEvent event) {
         if (rsTorches.contains(event.getBlock())) {
             rsTorches.remove(rsTorches.indexOf(event.getBlock()));
-            Map prefs = LightControl.redstonechips.getPrefs().getPrefs();
+            Map<String, Object> prefs = LightControl.redstonechips.getPrefs().getPrefs();
             if (Boolean.parseBoolean(prefs.get("glasslight.dropGlowstone").toString()) == false) {
                 event.setCancelled(true);
                 event.getBlock().setType(Material.AIR);

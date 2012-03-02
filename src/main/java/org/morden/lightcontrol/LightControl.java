@@ -2,20 +2,20 @@ package org.morden.lightcontrol;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.bukkit.event.Event.Priority;
-import org.bukkit.event.Event.Type;
-import org.bukkit.event.block.BlockListener;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.tal.redstonechips.circuit.CircuitLibrary;
 import org.tal.redstonechips.RedstoneChips;
+import org.bukkit.event.Listener;
 
 
 /**
  *
  * @author Dennis Flanagan
  */
-public class LightControl extends CircuitLibrary {
+public class LightControl extends CircuitLibrary implements Listener {
     private static List<RSLight> rsTorchLightCircuits = new ArrayList<RSLight>();
     public static RedstoneChips redstonechips;
     
@@ -26,28 +26,25 @@ public class LightControl extends CircuitLibrary {
     
     @Override
     public void onEnable() {
-        BlockListener blockListener = new BlockListener() {
-            @Override
-            public void onBlockPhysics(BlockPhysicsEvent event) {
-                if (!event.isCancelled()) {
-                    for (RSLight circuit : rsTorchLightCircuits)
-                        circuit.onBlockPhysics(event);
-                }
-            }
-            
-            @Override
-            public void onBlockBreak(BlockBreakEvent event) {
-                if (!event.isCancelled()) {
-                    for (RSLight circuit : rsTorchLightCircuits)
-                        circuit.onBlockBreak(event);
-                }
-            }
-        };
-    
-        getServer().getPluginManager().registerEvent(Type.BLOCK_PHYSICS, blockListener, Priority.Highest, this);
-        getServer().getPluginManager().registerEvent(Type.BLOCK_BREAK, blockListener, Priority.Highest, this);
+        getServer().getPluginManager().registerEvents(this, this);
+        getServer().getPluginManager().registerEvents(this, this);
     }
     
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onBlockPhysics(BlockPhysicsEvent event) {
+        if (!event.isCancelled()) {
+            for (RSLight circuit : rsTorchLightCircuits)
+                circuit.onBlockPhysics(event);
+        }
+    }
+    
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onBlockBreak(BlockBreakEvent event) {
+        if (!event.isCancelled()) {
+            for (RSLight circuit : rsTorchLightCircuits)
+                circuit.onBlockBreak(event);
+        }
+    }
     static void registerRSTorchLightCircuit(RSLight circuit) {
         if (!rsTorchLightCircuits.contains(circuit))
             rsTorchLightCircuits.add(circuit);
