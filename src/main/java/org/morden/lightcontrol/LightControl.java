@@ -9,9 +9,6 @@ import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.tal.redstonechips.circuit.CircuitLibrary;
 import org.tal.redstonechips.RedstoneChips;
-import org.tal.redstonechips.PrefsManager;
-import org.bukkit.material.MaterialData;
-import org.bukkit.Material;
 
 
 /**

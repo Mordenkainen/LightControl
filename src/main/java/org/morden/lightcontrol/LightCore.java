@@ -10,13 +10,10 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.Location;
-import org.bukkit.material.MaterialData;
 import org.tal.redstonechips.circuit.Circuit;
 import org.tal.redstonechips.wireless.Receiver;
-import org.tal.redstonechips.util.BitSet7;
-import org.tal.redstonechips.util.BitSetUtils;
-import org.tal.redstonechips.util.Locations;
-import org.tal.redstonechips.RedstoneChips;
+import org.tal.redstonechips.bitset.BitSet7;
+import org.tal.redstonechips.bitset.BitSetUtils;
 import org.tal.redstonechips.util.Locations;
 
 
