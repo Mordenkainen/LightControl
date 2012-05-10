@@ -1,4 +1,4 @@
-package org.morden.lightcontrol;
+package org.morden.lightcontrol.lights;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.block.BlockFace;

@@ -1,10 +1,12 @@
-package org.morden.lightcontrol;
+package org.morden.lightcontrol.lights;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.morden.lightcontrol.LightControl;
+
 import java.util.Map;
 import java.lang.Boolean;
 

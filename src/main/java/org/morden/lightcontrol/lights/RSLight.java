@@ -1,4 +1,4 @@
-package org.morden.lightcontrol;
+package org.morden.lightcontrol.lights;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.block.Block;
 import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.morden.lightcontrol.LightControl;
 
 /**
  *
@@ -32,7 +33,7 @@ public abstract class RSLight extends LightCore {
     public void onBlockPhysics(BlockPhysicsEvent event) {
         if (rsTorches.contains(event.getBlock())) {
             event.setCancelled(true);
-            ((Block)event.getBlock()).setType(offMaterial);
+            ((Block)event.getBlock()).setTypeIdAndData(offMaterial.getId(),((Block)event.getBlock()).getData() ,false);
         }
     }
     
@@ -48,12 +49,12 @@ public abstract class RSLight extends LightCore {
             if (!rsTorches.contains(block)) {
                 rsTorches.add(block);
             }
-            block.setType(offMaterial);
+            block.setTypeIdAndData(offMaterial.getId(), block.getData(), false);
         } else if (block.getType().equals(offMaterial) && value) {
             if (rsTorches.contains(block)) {
                 rsTorches.remove(rsTorches.indexOf(block));
             }
-            block.setType(onMaterial);
+            block.setTypeIdAndData(onMaterial.getId(), block.getData(), false);
         } else if (block.getType().equals(offMaterial) && !value) {
             if (!rsTorches.contains(block)) {
                 rsTorches.add(block);

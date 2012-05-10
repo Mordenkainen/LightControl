@@ -1,4 +1,4 @@
-package org.morden.lightcontrol;
+package org.morden.lightcontrol.lights;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -10,6 +10,7 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.Location;
+import org.morden.lightcontrol.LightControl;
 import org.tal.redstonechips.circuit.Circuit;
 import org.tal.redstonechips.wireless.Receiver;
 import org.tal.redstonechips.bitset.BitSet7;

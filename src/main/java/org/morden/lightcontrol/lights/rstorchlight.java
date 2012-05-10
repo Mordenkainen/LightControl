@@ -1,4 +1,4 @@
-package org.morden.lightcontrol;
+package org.morden.lightcontrol.lights;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.Material;
@@ -7,10 +7,10 @@ import org.bukkit.Material;
  *
  * @author Dennis Flanagan
  */
-public class torchlight extends RSLight {
+public class rstorchlight extends RSLight {
     @Override
     protected boolean init(CommandSender sender, String[] args) {
-        onMaterial = Material.TORCH;
+        onMaterial = Material.REDSTONE_TORCH_ON;
         offMaterial = Material.REDSTONE_TORCH_OFF;
         return super.init(sender, args);
     }

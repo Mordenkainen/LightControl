@@ -1,10 +1,8 @@
-package org.morden.lightcontrol;
+package org.morden.lightcontrol.lights;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.Material;
-import org.bukkit.material.Pumpkin;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockState;
 
 /**
  *
@@ -20,17 +18,10 @@ public class pumpkinlight extends LightCore {
     
     @Override
     protected void updateBlock(Block block, boolean value) {
-        BlockState state = block.getState();
         if (block.getType().equals(onMaterial) && !value) {
-            Pumpkin data = (Pumpkin)(state.getData());
-            state.setType(offMaterial);
-            state.setData(data);
-            state.update(true);
+            block.setTypeIdAndData(offMaterial.getId(), block.getData(), false);
         } else if (block.getType().equals(offMaterial) && value) {
-            Pumpkin data = (Pumpkin)(state.getData());
-            state.setType(onMaterial);
-            state.setData(data);
-            state.update(true);
+            block.setTypeIdAndData(onMaterial.getId(), block.getData(), false);
         } 
     }
 }
